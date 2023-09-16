@@ -1,0 +1,24 @@
+.menu {
+    background: white;
+    position: fixed;
+    width: 100%;  
+}
+
+.span-color {
+   color: #58CD64;
+}
+
+@media (max-width: 575px) {
+    .contener {
+        padding-top: 113px;
+    }  
+    .menu {
+        font-size: 12px;
+    }
+}
+
+@media (min-width: 576px) {
+    .contener {
+        padding-top: 113px;
+    } 
+}
