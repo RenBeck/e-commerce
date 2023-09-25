@@ -1,5 +1,5 @@
-{% load static %}<div class="menu bg-black">
-  <div class="d-flex align-items-center">
+{% load static %}<div class="menu">
+  <div class="d-flex align-items-center bg-black">
     <div class="col-8 col-md-9 text-md-center px-2 px-md-3 mt-3">
       <p class="fst-italic text-white"><span class="span-color">Frete Grátis</span> nas compras as acima de R$199 </p>
     </div>
@@ -10,11 +10,118 @@
       </div>
     </div>
   </div>
-  <nav class="d-flex justify-content-between navbar navbar-expand bg-white border-bottom border-body px-3 px-sm-4">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'home:home' %}">Home</a>
+  <div >
+    <nav class="d-flex navbar navbar-expand p-0">
+      <ul>
+        <li class="logo">
+          <img src="{% static 'global/images/LogoMenu.png' %}" alt="Logo do site">
+        </li>
+        <li class="dropdown">
+          <a href="#">Feminino</a>
+          <ul class="menu-area">
+            <ul>
+              <h4>Novidades</h4>
+              <li><a href="#">Moda Verão</a></li>
+              <li><a href="#">A partir de 30% de disconto</a></li>
+            </ul>
+            <ul>
+              <h4>Roupas</h4>
+              <li><a href="#">Calças</a></li>
+              <li><a href="#">camisetas</a></li>
+              <li><a href="#">Jaquetas</a></li>
+            </ul>
+            <ul>
+              <h4>Calçados</h4>
+              <li><a href="#">Sapato</a></li>
+              <li><a href="#">Tênis</a></li>
+              <li><a href="#">Chinelos</a></li>
+            </ul>
+            <ul>
+              <h4>Acessórios</h4>
+              <li><a href="#">Relógios</a></li>
+              <li><a href="#">Carteiras</a></li>
+              <li><a href="#">Óculos</a></li>
+            </ul>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#">Masculino</a>
+          <ul class="menu-area menu-space-1">
+            <ul>
+              <h4>Novidades</h4>
+              <li><a href="#">Moda Verão</a></li>
+              <li><a href="#">A partir de 30% de disconto</a></li>
+            </ul>
+            <ul>
+              <h4>Roupas</h4>
+              <li><a href="#">Calças</a></li>
+              <li><a href="#">camisetas</a></li>
+              <li><a href="#">Jaquetas</a></li>
+            </ul>
+            <ul>
+              <h4>Calçados</h4>
+              <li><a href="#">Sapato</a></li>
+              <li><a href="#">Tênis</a></li>
+              <li><a href="#">Chinelos</a></li>
+            </ul>
+            <ul>
+              <h4>Acessórios</h4>
+              <li><a href="#">Relógios</a></li>
+              <li><a href="#">Carteiras</a></li>
+              <li><a href="#">Óculos</a></li>
+            </ul>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#">Infantil</a>
+          <ul class="menu-area menu-space-2">
+            <ul>
+              <h4>Novidades</h4>
+              <li><a href="#">Moda Verão</a></li>
+              <li><a href="#">A partir de 30% de disconto</a></li>
+            </ul>
+            <ul>
+              <h4>Roupas</h4>
+              <li><a href="#">Calças</a></li>
+              <li><a href="#">camisetas</a></li>
+              <li><a href="#">Jaquetas</a></li>
+            </ul>
+            <ul>
+              <h4>Calçados</h4>
+              <li><a href="#">Sapato</a></li>
+              <li><a href="#">Tênis</a></li>
+              <li><a href="#">Chinelos</a></li>
+            </ul>
+            <ul>
+              <h4>Acessórios</h4>
+              <li><a href="#">Relógios</a></li>
+              <li><a href="#">Carteiras</a></li>
+              <li><a href="#">Óculos</a></li>
+            </ul>
+          </ul>
+        </li>
+        <li>
+          <a href="#">Outlet</a>
         </li>
       </ul>
-  </nav>
+      <ul  class="d-flex justify-content-end">       
+        <div class="d-flex">
+          <li>
+            <a href="#">
+              <img src="{% static 'global/images/menuUser.png' %}" alt="Menu do cliente">
+            </a>
+          </li>
+          <li class="mx-3">
+            <a href="#">
+              <img src="{% static 'global/images/sacola.png' %}" alt="Sacola do cliemte">
+            </a>
+          </li>
+        </div>
+      </ul>
+    </nav>
+  </div>
 </div>
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'global/header/css/style.css' %}">
+{% endblock style %}
