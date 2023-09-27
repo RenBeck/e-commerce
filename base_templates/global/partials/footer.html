@@ -1,7 +1,28 @@
-{% load static %}<footer>
-    <div id="contatos" class="d-flex row align-items-center col-10 col-sm-8 col-lg-8 offset-2 offset-sm-4 offset-lg-4 px-lg-5 pt-5">
-        <div class="d-flex mt-3">
-            <p class="mt-5 text-center">©2023 por Renato Beck</p> 
-        </div> 
+{% load static %}<footer> 
+    <div class="d-flex justify-content-around align-items-center pt-5">
+        <div>
+            <a href="#">
+                <h5>Meus Pedidos</h5>
+            </a>
+            <a href="#">
+                <h5>Nossas Lojas</h5>
+            </a>
+            <a href="#">
+                <h5>Trabalhe Conosco</h5>
+            </a>
+        </div>
+        <div class="text-center">
+            <a class="nav-link" href="https://wa.me/5531984987998?text=Oi%2C%20tudo%20bem%3F" target="_blank">
+              <h5>Atendimento via WhatsApp</h5>
+            </a>
+            <h5>Segunda a Sexta: 08h às 19h Sábados: 08h às 18h</h5>
+        </div>
+    </div>
+    <div id="contatos" class="pb-2 pt-5">
+            <p class="text-center">©2023 por Renato Beck</p> 
     </div>   
 </footer>
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'global/footer/css/style.css' %}">
+{% endblock style %}

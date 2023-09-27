@@ -10,7 +10,157 @@
       </div>
     </div>
   </div>
-  <div >
+  <div class="d-md-none">
+    <nav class="navbar bg-body-tertiary fixed-top">
+      <div class="container-fluid">
+        <img src="{% static 'global/images/LogoMenu.png' %}" alt="Logo do site">
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+          <img src="{% static 'global/images/Menu.png' %}" alt="Menu do site">
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+          <div class="offcanvas-header">
+            <img src="{% static 'global/images/LogoMenu.png' %}" alt="Logo do site">
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+              <li><a href="#">Outlet</a></li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Feminio
+                </a>
+                <ul class="dropdown-menu">
+                  <li><h5 class="text-center">Lançamentos</h5></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="#">Moda Verão</a></li>
+                  <li><a class="dropdown-item" href="#">Desconto apartir de 30%</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><h5 class="text-center">Roupas</h5></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="#">Camisetas</a></li>
+                  <li><a class="dropdown-item" href="#">Calças</a></li>
+                  <li><a class="dropdown-item" href="#">Camisas</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><h5 class="text-center">Calçados</h5></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="#">Sapatos</a></li>
+                  <li><a class="dropdown-item" href="#">Chinelos</a></li>
+                  <li><a class="dropdown-item" href="#">Tênis</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><h5 class="text-center">Acessórios</h5></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="#">Bolças</a></li>
+                  <li><a class="dropdown-item" href="#">Relógios</a></li>
+                  <li><a class="dropdown-item" href="#">Carteiras</a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Masculino
+                </a>
+                <ul class="dropdown-menu">
+                  <li><h5 class="text-center">Lançamentos</h5></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="#">Moda Verão</a></li>
+                  <li><a class="dropdown-item" href="#">Desconto apartir de 30%</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><h5 class="text-center">Roupas</h5></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="#">Camisetas</a></li>
+                  <li><a class="dropdown-item" href="#">Calças</a></li>
+                  <li><a class="dropdown-item" href="#">Camisas</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><h5 class="text-center">Calçados</h5></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="#">Sapatos</a></li>
+                  <li><a class="dropdown-item" href="#">Chinelos</a></li>
+                  <li><a class="dropdown-item" href="#">Tênis</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><h5 class="text-center">Acessórios</h5></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="#">Bolças</a></li>
+                  <li><a class="dropdown-item" href="#">Relógios</a></li>
+                  <li><a class="dropdown-item" href="#">Carteiras</a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Infantil
+                </a>
+                <ul class="dropdown-menu">
+                  <li><h5 class="text-center">Lançamentos</h5></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="#">Moda Verão</a></li>
+                  <li><a class="dropdown-item" href="#">Desconto apartir de 30%</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><h5 class="text-center">Roupas</h5></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="#">Camisetas</a></li>
+                  <li><a class="dropdown-item" href="#">Calças</a></li>
+                  <li><a class="dropdown-item" href="#">Camisas</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><h5 class="text-center">Calçados</h5></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="#">Sapatos</a></li>
+                  <li><a class="dropdown-item" href="#">Chinelos</a></li>
+                  <li><a class="dropdown-item" href="#">Tênis</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><h5 class="text-center">Acessórios</h5></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="#">Bolças</a></li>
+                  <li><a class="dropdown-item" href="#">Relógios</a></li>
+                  <li><a class="dropdown-item" href="#">Carteiras</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <div class="d-none d-md-block">
     <nav class="d-flex navbar navbar-expand p-0">
       <ul>
         <li class="logo">

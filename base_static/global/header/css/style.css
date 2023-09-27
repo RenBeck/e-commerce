@@ -1,3 +1,5 @@
+/*menu desktop*/
+
 .menu {
     background: white;
     position: fixed;
@@ -87,13 +89,31 @@ nav ul li:hover ul.menu-area{
 }
 
 nav ul li:hover ul.menu-space-1{
-    left: -209px;
+    left: -219px;
 }
 
 nav ul li:hover ul.menu-space-2{
-    left: -327px;
+    left: -346px;
 }
 
 nav ul.menu-area ul li{
     display: block;
+}
+
+/*menu mobile*/
+
+.navbar-toggler {
+    border: none;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+.dropdown-menu.show {
+    border-color: #020618;
+}
+
+.dropdown-divider {
+    border-color: #020618;
 }
