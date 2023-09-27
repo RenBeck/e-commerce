@@ -10,3 +10,9 @@ a{
 a:hover{
     color: rgb(20, 14, 77);
 }
+
+@media (max-width: 767px) {
+    h5 {
+        font-size: 16px;
+    }
+}

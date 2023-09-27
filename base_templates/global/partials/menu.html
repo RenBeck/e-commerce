@@ -13,15 +13,33 @@
   <div class="d-md-none">
     <nav class="navbar bg-body-tertiary fixed-top">
       <div class="container-fluid">
-        <img src="{% static 'global/images/LogoMenu.png' %}" alt="Logo do site">
-        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-          <img src="{% static 'global/images/Menu.png' %}" alt="Menu do site">
-        </button>
+        <a class="nav-link" href="{% url 'home:home' %}">
+          <img src="{% static 'global/images/LogoMenu.png' %}" alt="Logo do site">
+        </a>
+        <div class="d-flex justify-content-end align-items-center">
+          <ul  class="m-0">       
+            <div class="d-flex">
+              <li>
+                <a href="#">
+                  <img src="{% static 'global/images/menuUser.png' %}" alt="Menu do cliente">
+                </a>
+              </li>
+              <li class="mx-3">
+                <a href="{% url 'sacola:sacola' %}">
+                  <img src="{% static 'global/images/sacola.png' %}" alt="Sacola do cliemte">
+                </a>
+              </li>
+            </div>
+          </ul>
+          <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <img src="{% static 'global/images/Menu.png' %}" alt="Menu do site">
+          </button>
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
           <div class="offcanvas-header">
             <img src="{% static 'global/images/LogoMenu.png' %}" alt="Logo do site">
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
           </div>
+          <div></div>
           <div class="offcanvas-body">
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
               <li><a href="#">Outlet</a></li>
@@ -164,7 +182,9 @@
     <nav class="d-flex navbar navbar-expand p-0">
       <ul>
         <li class="logo">
-          <img src="{% static 'global/images/LogoMenu.png' %}" alt="Logo do site">
+          <a class="nav-link" href="{% url 'home:home' %}">
+            <img src="{% static 'global/images/LogoMenu.png' %}" alt="Logo do site">
+          </a>
         </li>
         <li class="dropdown">
           <a href="#">Feminino</a>
@@ -262,7 +282,7 @@
             </a>
           </li>
           <li class="mx-3">
-            <a href="#">
+            <a href="{% url 'sacola:sacola' %}">
               <img src="{% static 'global/images/sacola.png' %}" alt="Sacola do cliemte">
             </a>
           </li>
