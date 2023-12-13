@@ -5,13 +5,15 @@
     </div>
     <div class="col-4 col-md-3">
       <div class="d-flex align-items-center justify-content-end mt-3 text-white">
-        <p>Nossas Lojas</p>
-        <p class="mx-2 mx-md-3">Blog</p>
+        <p class="mx-2 mx-md-3">Nossas Lojas</p>
       </div>
     </div>
   </div>
   <div class="d-md-none">
-    <nav class="navbar bg-body-tertiary fixed-top">
+    <nav class="navbar fixed-top p-0">
+      <div class="col-12 text-center bg-black">
+          <p class="fst-italic text-white my-3"><span class="span-color">Frete Grátis</span> nas compras as acima de R$199 </p>
+      </div>
       <div class="container-fluid">
         <a class="nav-link" href="{% url 'home:home' %}">
           <img src="{% static 'global/images/LogoMenu.png' %}" alt="Logo do site">

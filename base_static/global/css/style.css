@@ -4,7 +4,7 @@
 
 @media (max-width: 767px) {
     .contener {
-        padding-top: 90px;
+        padding-top: 126px;
     }  
     .menu {
         font-size: 12px;
@@ -13,7 +13,7 @@
 
 @media (min-width: 768px) {
     .contener {
-        padding-top: 120px;
+        padding-top: 126px;
     } 
 }
 
