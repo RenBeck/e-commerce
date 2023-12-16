@@ -9,8 +9,6 @@ class Produto(models.Model):
     categoria = models.CharField(max_length=255)
     sub_categoria = models.CharField(max_length=255)
     marca = models.CharField(max_length=255)
-    imagem = models.ImageField(
-        upload_to='produto_imagens', blank=True, null=True)
     slug = models.SlugField(unique=True, blank=True, null=True)
     preco = models.FloatField(verbose_name='Preço')
     preco_minimo = models.FloatField(
@@ -24,6 +22,15 @@ class Produto(models.Model):
         )
     )
 
+
+class Variacao(models.Model):
+    produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
+    cor = models.CharField(max_length=100)
+    tamanho = models.CharField(max_length=3)
+    estoque = models.PositiveIntegerField(default=1)
+    imagem = models.ImageField(
+        upload_to='produto_imagens', blank=True, null=True)
+    
     @staticmethod
     def resize_image(img):
         img_full_path = os.path.join(settings.MEDIA_ROOT, img.name)
@@ -39,10 +46,16 @@ class Produto(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-
-        if self.imagem:
-            self.resize_image(self.imagem)
+            
+        self.resize_image(self.imagem)
 
     def __str__(self):
         return self.nome
+    
 
+    def __str__(self):
+        return self.cor or self.produto.cor
+
+    class Meta:
+        verbose_name = 'Variação'
+        verbose_name_plural = 'Variações'
