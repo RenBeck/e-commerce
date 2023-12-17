@@ -6,8 +6,24 @@ from django.db import models
 class Produto(models.Model):
     nome = models.CharField(max_length=255)
     descricao = models.TextField()
-    categoria = models.CharField(max_length=255)
-    sub_categoria = models.CharField(max_length=255)
+    categoria = models.CharField(
+        max_length=1,
+        default='F',
+        choices=(
+            ('F', 'Feminino'),
+            ('M', 'Masculino'),
+            ('I', 'Infantil'),
+        )
+    )
+    sub_categoria = models.CharField(
+        max_length=1,
+        default='F',
+        choices=(
+            ('R', 'Roupa'),
+            ('C', 'Calçados'),
+            ('A', 'Acessórios'),
+        )
+    )
     marca = models.CharField(max_length=255)
     slug = models.SlugField(unique=True, blank=True, null=True)
     preco = models.FloatField(verbose_name='Preço')
