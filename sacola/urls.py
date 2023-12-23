@@ -16,10 +16,13 @@ Including another URLconf
 """
 
 from django.urls import path
-from sacola import views
+from . import views
 
 app_name = 'sacola'
 
 urlpatterns = [
-    path('', views.sacola, name='sacola'),
+    path('pagar/<int:pk>', views.Pagar.as_view(), name='pagar'),
+    path('salvarsacola/', views.SalvarSacola.as_view(), name='salvarpedido'),
+    path('lista/', views.Lista.as_view(), name='lista'),
+    path('detalhe/<int:pk>', views.Detalhe.as_view(), name='detalhe'),
 ]

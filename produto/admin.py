@@ -3,10 +3,13 @@ from . import models
 
 class VariacaoInline(admin.TabularInline):
     model = models.Variacao
-    extra = 1
-
+    min_num = 1
+    extra = 0
+    can_delete = True
 
 class ProdutoAdmin(admin.ModelAdmin):
+    list_display = ['nome', 'descricao',
+                    'get_preco_formatado', 'get_preco_minimo_formatado']
     inlines = [
         VariacaoInline
     ]

@@ -1,12 +1,24 @@
-from django.shortcuts import render
+from django.shortcuts import redirect
+from django.views.generic import ListView, DetailView
+from django.views import View
 
-context = {
-    'title': 'BS | Sacola'
-}
 
-def sacola(request):
-    return render(
-        request,
-        'sacola/index.html',
-        context
-    )
+class DispatchLoginRequiredMixin(View):
+    pass
+
+
+class Pagar(DispatchLoginRequiredMixin, DetailView):
+    pass
+
+
+class SalvarSacola(View):
+    pass
+
+
+class Detalhe(DispatchLoginRequiredMixin, DetailView):
+    pass
+
+
+class Lista(DispatchLoginRequiredMixin, ListView):
+    pass
+
