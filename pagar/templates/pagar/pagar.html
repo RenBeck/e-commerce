@@ -1,0 +1,30 @@
+{% extends 'global/base.html' %}
+{% load static %}
+{% block title %} Pagamento | BS{% endblock %}
+
+{% block conteudo %}
+    <div class="row mx-4 contener">
+      <h3 class="text-center mb-3">Preencha os campos para fazer pagamento:</h3>
+      <form method="post" name="formCard" id="formCard" action="PaymentController/">
+        <div class="col-md-6 m-auto form-card mb-4">
+            <input type="text" name="publicKey" id="publicKey" value="{{publicKey}}">
+            <input type="text" name="encriptedCard" id="encriptedCard">
+            {% csrf_token %}
+            <input type="text" class="form-control m-3" name="cardNumber" id="cardNumber" maxlength="16" placeholder="Número do Cartão">
+            <input type="text" class="form-control mx-3" name="cardHolder" id="cardHolder" placeholder="Nome no Cartão">
+            <input type="text" class="form-control m-3" name="cardMonth" id="cardMonth" maxlength="2" placeholder="Mês de Validade do Cartão">
+            <input type="text" class="form-control mx-3" name="cardYear" id="cardYear" maxlength="4" placeholder="Ano do Cartão">
+            <input type="text" class="form-control m-3" name="cardCvv" id="cardCvv" maxlength="4" placeholder="CVV do Cartão">
+            <div class="text-center">
+              <input type="submit" class="btn btn-primary btn-block mb-3" value="Pagar">
+            </div>
+        </div>
+    </form>
+    <script src="https://assets.pagseguro.com.br/checkout-sdk-js/rc/dist/browser/pagseguro.min.js"></script>
+    <script src="{% static 'pagar/js/javascript.js' %}"></script>
+    </div>  
+{% endblock %}
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'pagar/css/style.css' %}">
+{% endblock style %}

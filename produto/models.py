@@ -1,14 +1,15 @@
 from django.conf import settings
 import os
-from PIL import Image
 from django.db import models
+from django.utils.text import slugify
 from utils import utils
 
 class Produto(models.Model):
-    nome = models.CharField(max_length=255)
+    nome = models.CharField(max_length=150)
     imagem = models.ImageField(
         upload_to='produto_imagens', blank=True, null=True)
     descricao = models.TextField()
+    cor = models.CharField(max_length=50)
     categoria = models.CharField(
         max_length=1,
         default='F',
@@ -27,72 +28,79 @@ class Produto(models.Model):
             ('A', 'Acessórios'),
         )
     )
+    tipo =  models.CharField(
+        max_length=30,
+        default='Outros',
+        choices=(
+            ('Outro','Outro'),
+            ('Camisa', 'Camisa'),
+            ('Cropped', 'Cropped'),
+            ('Short', 'Short'),
+            ('Calca','Calça'),
+            ('Vestido','Vestido'),
+            ('Camiseta','Camiseta'),
+            ('Blazer','Blazer'),
+            ('Saia','Saia'),
+            ('Moletom','Moletom'),
+            ('Jaqueta','Jaqueta'),
+            ('Polo','Polo'),
+            ('Tenis','Tênis'),
+            ('Sandalia','Sandália'),
+            ('Rasteira','Rasteira'),
+            ('Chinelo','Chinelo'),
+            ('Oculos','Óculos'),
+            ('Mochila','Mochila'),
+            ('Bolca','Bolça'),
+            ('Carteira','Carteira'),
+            ('Cinto','Cinto'),
+            ('Bone','Boné'),       
+        )
+    )
     marca = models.CharField(max_length=255)
     slug = models.SlugField(unique=True, blank=True, null=True)
     preco = models.FloatField(verbose_name='Preço')
-    preco_minimo = models.FloatField(
-        default=preco, verbose_name='Preço Minimo.')
+    preco_promocional = models.FloatField(
+        default=preco, verbose_name='Preço Promocional')
     
     def get_preco_formatado(self):
         return utils.formata_preco(self.preco)
     get_preco_formatado.short_description = 'Preço'
 
-    def get_preco_minimo_formatado(self):
-        return utils.formata_preco(self.preco_minimo)
-    get_preco_minimo_formatado.short_description = 'Preço Minimo.'
-
-    @staticmethod
-    def resize_image(img):
-        img_full_path = os.path.join(settings.MEDIA_ROOT, img.name)
-        img_pil = Image.open(img_full_path)
-        original_width, original_height = img_pil.size
-
-        new_img = img_pil.resize((original_width, original_height), Image.LANCZOS)
-        new_img.save(
-            img_full_path,
-            optimize=True,
-            quality=80
-        )
-
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-            
-        self.resize_image(self.imagem)
-
-
-class Variacao(models.Model):
-    produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
-    cor = models.CharField(max_length=100)
-    tamanho = models.CharField(max_length=3)
-    estoque = models.PositiveIntegerField(default=1)
-    imagem = models.ImageField(
-        upload_to='produto_imagens', blank=True, null=True)
+    def get_preco_promocional_formatado(self):
+        return utils.formata_preco(self.preco_promocional)
+    get_preco_promocional_formatado.short_description = 'Preço Promo.'
     
-    @staticmethod
-    def resize_image(img):
-        img_full_path = os.path.join(settings.MEDIA_ROOT, img.name)
-        img_pil = Image.open(img_full_path)
-        original_width, original_height = img_pil.size
-
-        new_img = img_pil.resize((original_width, original_height), Image.LANCZOS)
-        new_img.save(
-            img_full_path,
-            optimize=True,
-            quality=80
-        )
 
     def save(self, *args, **kwargs):
+        if not self.slug:
+            slug = f'{slugify(self.nome)}'
+            self.slug = slug
         super().save(*args, **kwargs)
-            
-        self.resize_image(self.imagem)
+
 
     def __str__(self):
         return self.nome
-    
 
+class Variacao(models.Model):
+    produto = models.ForeignKey(Produto, on_delete=models.CASCADE)   
+    nome = models.CharField(max_length=10, default='U')
+    estoque = models.PositiveIntegerField(default=1)
+    
     def __str__(self):
-        return self.cor or self.produto.cor
+        return self.nome or self.produto.nome
 
     class Meta:
         verbose_name = 'Variação'
         verbose_name_plural = 'Variações'
+
+class Imagem(models.Model):
+    produto = models.ForeignKey(Produto, on_delete=models.CASCADE, related_name='imagens')
+    imagem = models.ImageField(upload_to='imagens_produtos/', blank=True, null=True, verbose_name='Imagem do Produto')
+
+    def __str__(self):
+        return self.imagem.url if self.imagem else "No Image"
+
+    class Meta:
+        verbose_name = 'Imagem'
+        verbose_name_plural = 'Imagens'
+

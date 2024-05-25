@@ -1,0 +1,49 @@
+{% load static %}
+{% load bsfilters %}
+
+<div class="table-responsive">
+    <table class="table">
+        <tr>
+            <th class="d-none d-lg-block">Imagem</th>
+            <th>Produto</th>
+            <th>V.</th>
+            <th>QTD.</th>
+            <th>Total</th>
+        </tr>
+
+        {% for linha in sacola.values %}
+        <tr>
+            <td class="d-none d-lg-block">
+                <img class="cart-img" src="{% get_media_prefix %}{{ linha.imagem }}">
+            </td>
+            <td>
+                <a href="{% url 'produto:detalhe' linha.slug %}">
+                    {{ linha.produto_nome }}
+                </a>
+
+                <a class="mx-3" href="{% url 'produto:removerdosacola' %}?vid={{ linha.variacao_id }}">
+                    <img src="{% static 'global/images/excluir_produto.png' %}" alt="Excuir produto">
+                </a>
+            </td>
+            <td>{{ linha.variacao_nome }}</td>
+            <td>
+                {{ linha.quantidade }} x
+                {% if linha.preco_unitario_promocional %}
+                {{ linha.preco_unitario_promocional }}
+                {% else %}
+                {{ linha.preco_unitario }}
+                {% endif %}
+            </td>
+
+            {% if linha.preco_quantitativo_promocional %}
+            <td>{{ linha.preco_quantitativo_promocional|formata_preco }}</td>
+            {% else %}
+            <td>{{ linha.preco_quantitativo|formata_preco }}</td>
+            {% endif %}
+
+        </tr>
+        {% endfor %}
+
+
+    </table>
+</div>

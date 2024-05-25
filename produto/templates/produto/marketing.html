@@ -1,0 +1,85 @@
+{% extends 'global/base.html' %}
+{% load bsfilters %}
+{% load static %}
+{% block title %} Home | BS{% endblock %}
+
+{% block conteudo %}
+<a href="{% url 'produto:outlet' %}">
+    <div class="d-flex row align-items-center contener justify-content-center bgfiltro">
+      <div  class="col-12 col-md-6 px-4 pt-4 p-md-5">
+          <img class="cart-img" src="{% static 'global/images/etiqBlack.png' %}" alt="Etiqueta da black friaday">
+      </div>
+      <div class="col-12 col-md-6 px-4 pb-4 p-md-5">
+        <img class="cart-img" src="{% static 'global/images/friaday.png' %}" alt="Etiqueta da black friaday">
+      </div>
+  </div>    
+</a>
+<h1 class="text-center my-3">O que está procurando?</h1>
+<div class="d-flex mx-2 mx-md-3">
+  <a href="{% url 'produto:buscacategoria' 'F' %}">
+    <img class="cart-img" src="{% static 'global/images/mulher.jpg' %}" alt="Etiqueta da black friaday">
+  </a>
+  <a href="{% url 'produto:buscacategoria' 'I' %}">
+    <img class="cart-img" src="{% static 'global/images/crianca.png' %}" alt="Etiqueta da black friaday">
+  </a>
+  <a href="{% url 'produto:buscacategoria' 'M' %}">
+    <img class="cart-img" src="{% static 'global/images/homem.png' %}" alt="Etiqueta da black friaday">
+  </a>
+</div>
+<div class="grid-container mt-4">
+
+  {% for produto in produtos %}
+
+  <div class="card-stilo mb-3">
+
+    <div class="row">
+      {% if produto.imagem %}
+      <a href="{% url 'produto:detalhe' produto.slug %}">
+        <img class="card-img-top mb-2" src="{{ produto.imagem.url }}" alt="{{produto.nome}}">
+      </a>
+      {% endif %}
+
+      <div class="card-body">
+          <h5 class="card-title px-3">{{ produto.nome }}</h5>  
+          <div class="container product-price-block align-items-end text-center">
+            
+              {% if produto.preco_promocional %}
+                <span class="product-price">
+                    {{ produto.preco_promocional|formata_preco }}
+                </span>
+                <span class="product-old-price text-muted">
+                    {{ produto.preco|formata_preco }}
+                </span>
+              {% else %}
+                <span class="product-price">
+                    {{ produto.preco|formata_preco }}
+                </span>
+              {% endif %}
+
+              <div class="card-footer bg-transparent text-center">
+                  <a href="{% url 'produto:detalhe' produto.slug %}" class="btn btn-sm m-3 px-3 btn-block">
+                      <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                      Adicionar à Sacola
+                  </a>
+              </div>
+          </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  {% endfor %}
+</div>
+
+<div class="row mt-3">
+  <div class="col">
+      {% include 'global/partials/_pagination.html' %}
+  </div>
+</div>
+
+{% endblock %}
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'produto/marketing/css/style.css' %}">
+{% endblock style %}

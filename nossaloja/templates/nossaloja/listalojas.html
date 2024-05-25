@@ -1,0 +1,23 @@
+{% extends 'global/base.html' %}
+{% load static %}
+{% block title %} Nossas lojas | BS{% endblock %}
+
+{% block conteudo %}
+<div class="row contener">
+  <h1 class="m-4">Nossas Lojas</h1>
+  <div class="grid-container">
+    {% for loja in lojas %}
+    <div class="card-stilo mb-4 mx-4">
+      <div class="row">
+          <h3 class="my-4">{{ loja.loja }}</h3>  
+          <p>Endereço: {{ loja.rua }}, {{loja.numero}} - {{loja.bairro}} - {{loja.cidade}}/{{loja.estado}}</p>
+          <p>CEP: {{loja.cep}}</p>
+        </div>
+    </div>
+    {% endfor %}
+  </div>  
+{% endblock %}
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'nossaloja/css/style.css' %}">
+{% endblock style %}

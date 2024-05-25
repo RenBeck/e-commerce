@@ -1,0 +1,82 @@
+{% extends 'global/base.html' %}
+{% load static %}
+{% load bsfilters %}
+
+{% block title %}{{ produto.nome }} | BS {% endblock %}
+
+{% block conteudo %}
+<div class="row contener">  
+    <div class="col-md-6 p-0">
+        <div id="carouselImagensProduto" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                {% for imagem in imagens %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <img src="{{ imagem.imagem.url }}" class="d-block w-100" alt="Imagem do Carousel">
+                </div>
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselImagensProduto" data-bs-slide="prev">
+                <img  src="{% static 'global/images/prev.png' %}" alt="ir para imagem anterior">
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselImagensProduto" data-bs-slide="next">
+                <img  src="{% static 'global/images/next.png' %}" alt="ir para imagem">
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="mt-4 mx-4 mt-lg-0">
+            <h1 class="h2">{{ produto.nome }}</h1>
+            <p class="lead">{{ produto.descricao }}</p>
+            <p class="lead">
+                {% if produto.preco_promocional %}
+                <span id="variation-preco-minimo" class="lead product-price">
+                    {{ produto.preco_promocional|formata_preco }}
+                </span>
+                {% else %}
+                <span id="variation-preco" class="lead product-price">
+                    {{ produto.preco|formata_preco }}
+                </span>
+                {% endif %}
+            </p>
+
+            <form action="{% url 'produto:adicionaraosacola' %}" id="form-add-to-cart">
+                <div class="form-group mb-3">
+                    <select id="select-variacoes" name="vid" class="form-control">
+                        {% for variacao in produto.variacao_set.all %}
+
+                        <option
+                            value="{{ variacao.id }}">
+                            {% if variacao.nome %}
+                            {{ variacao.nome }}
+                            {% else %}
+                            {{ variacao }}
+                            {% endif %}
+                        </option>
+
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="text-left my-4">
+                    <button type="submit" class="btn btn-block">
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                        Adicionar à Sacola
+                    </button>
+                </div>
+
+            </form>
+
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'produto/detalhe/css/style.css' %}">
+{% endblock style %}

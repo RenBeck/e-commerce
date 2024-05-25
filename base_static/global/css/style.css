@@ -2,13 +2,13 @@
    color: #58CD64;
 }
 
-.card {
-    z-index: -1;
+.alert {
+    z-index: 5;
 }
 
 @media (max-width: 767px) {
     .contener {
-        padding-top: 126px;
+        padding-top: 196px;
     }  
     .menu {
         font-size: 12px;
@@ -17,7 +17,7 @@
 
 @media (min-width: 768px) {
     .contener {
-        padding-top: 126px;
+        padding-top: 130px;
     } 
 }
 

@@ -1,0 +1,22 @@
+#publicKey {
+    display: none;
+}
+
+#encriptedCard {
+    display: none;
+}
+
+.btn {
+    margin-left: 24px;
+    background: #020618;
+    color: white;
+    width: 50%;
+}
+
+.form-card {
+    padding-right: 34px;
+    border-radius: 16px;
+    border: 1px solid #020618;
+    background:  #FAFAFA; 
+    box-shadow: 2px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
