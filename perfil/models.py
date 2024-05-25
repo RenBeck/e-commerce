@@ -8,13 +8,15 @@ from utils.validacpf import valida_cpf
 class Perfil(models.Model):
     usuario = models.OneToOneField(User, on_delete=models.CASCADE,
                                    verbose_name='Usuário')
-    cpf = models.CharField(max_length=11)
-    rua = models.CharField(max_length=50)
+    cpf = models.CharField(max_length=11, verbose_name='CPF')
+    ddd = models.CharField(max_length=2, default=31, verbose_name='Codigo de área')
+    celular = models.CharField(max_length=9, default=999999999)
+    rua = models.CharField(max_length=100)
     numero = models.CharField(max_length=5)
-    complemento = models.CharField(max_length=30)
-    bairro = models.CharField(max_length=30)
+    complemento = models.CharField(max_length=200)
+    bairro = models.CharField(max_length=100)
     cep = models.CharField(max_length=8)
-    cidade = models.CharField(max_length=30)
+    cidade = models.CharField(max_length=100)
     estado = models.CharField(
         max_length=2,
         default='SP',
@@ -77,3 +79,5 @@ class Perfil(models.Model):
     class Meta:
         verbose_name = 'Perfil'
         verbose_name_plural = 'Perfis'
+   
+        

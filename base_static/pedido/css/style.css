@@ -1,0 +1,15 @@
+.table {
+    vertical-align: middle;
+}
+
+.btn {
+    background: #020618;
+    color: white;
+    width: 260px;
+}
+
+.cart-img {
+    height: 300px; 
+    width: 250px;
+    border-radius: 8px;
+ }

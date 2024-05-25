@@ -1,0 +1,16 @@
+{% extends 'global/base.html' %}
+{% load static %}
+{% block title %}Pagamento | BS{% endblock %}
+
+{% load bsfilters %}
+{% load static %}
+
+{% block conteudo %}
+
+{% include 'global/partials/_pedido.html' %}
+
+{% endblock %}
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'pedido/css/style.css' %}">
+{% endblock style %}

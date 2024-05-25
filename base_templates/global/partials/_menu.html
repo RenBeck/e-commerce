@@ -1,36 +1,72 @@
+{% load bsfilters %}
+
 {% load static %}<div class="menu">
   <div class="d-flex align-items-center bg-black">
-    <div class="col-8 col-md-9 text-md-center px-2 px-md-3 mt-3">
-      <p class="fst-italic text-white"><span class="span-color">Frete Grátis</span> nas compras as acima de R$199 </p>
+    <div class="col-8 col-md-6 col-lg-8 col-xl-9 text-md-center px-2 px-md-3 mt-3">
+      <p class="fst-italic text-white"><span class="span-color">Frete Grátis</span> para toda nosso site! </p>
     </div>
-    <div class="col-4 col-md-3">
-      <div class="d-flex align-items-center justify-content-end mt-3 text-white">
-        <p class="mx-2 mx-md-3">Nossas Lojas</p>
-      </div>
+    <div class="col-4 col-md-6 col-lg-4 col-xl-3">
+      <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'produto:busca' %}">
+        <div class="d-flex mx-4">
+          <input name="termo" value="{{ request.GET.termo }}" class="form-control mr-sm-2" type="search"
+              placeholder="Busca" aria-label="Busca">
+          <button class="btn btn-secondary m-3 my-sm-0" type="submit">
+            <img src="{% static 'global/images/ImgPesquisa.png' %}" alt="Lupo de pesquisa">
+          </button>
+        </div>
+      </form>
     </div>
   </div>
   <div class="d-md-none">
     <nav class="navbar fixed-top p-0">
       <div class="col-12 text-center bg-black">
-          <p class="fst-italic text-white my-3"><span class="span-color">Frete Grátis</span> nas compras as acima de R$199 </p>
+          <p class="fst-italic text-white my-3"><span class="span-color">Frete Grátis</span> para toda nosso site! </p>
+          <form class="form-inline my-4 my-lg-0" method="GET" action="{% url 'produto:busca' %}">
+            <div class="d-flex mx-4 mx-sm-5 px-sm-5">
+              <input name="termo" value="{{ request.GET.termo }}" class="form-control mr-sm-2" type="search"
+                  placeholder="Busca" aria-label="Busca">
+              <button class="btn btn-secondary mx-3" type="submit">
+                <img src="{% static 'global/images/ImgPesquisa.png' %}" alt="Lupo de pesquisa">
+              </button>
+            </div>
+          </form>
       </div>
       <div class="container-fluid">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{% url 'produto:marketing' %}">
           <img src="{% static 'global/images/LogoMenu.png' %}" alt="Logo do site">
         </a>
         <div class="d-flex justify-content-end align-items-center">
           <ul  class="m-0">       
             <div class="d-flex">
-              <li>
-                <a href="#">
+              {% if request.user.is_authenticated %}
+              <li class="nav-item dropdown mx-3">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <img src="{% static 'global/images/menuUser.png' %}" alt="Menu do cliente">
                 </a>
+                <ul class="dropdown-menu menu-space-3">
+                  <li><a class="dropdown-item" href="{% url 'pedido:lista' %}">Meus pedidos</a></li>
+                  <li><a class="dropdown-item" href="{% url 'perfil:criar' %}">Atualizar meus dados</a></li>
+                  <li><a class="dropdown-item" href="{% url 'perfil:logout' %}">Sair</a></li>
+                </ul>
               </li>
-              <li class="mx-3">
-                <a href="#">
+              {% else %}
+              <li class="nav-item mx-2">
+                  <a class="nav-link" href="{% url 'perfil:criar' %}">Entrar</a>
+              </li>
+              <li class="nav-item mx-2">
+                  <a class="nav-link" href="{% url 'perfil:criar' %}">Criar conta</a>
+              </li>
+              {% endif %}
+              {% if request.session.sacola %}
+              <li>
+                <a class="active" href="{% url 'produto:sacola' %}">
+                  <span class="nav-cart-count mr-1">
+                    <strong>{{ request.session.sacola|cart_total_qtd }}x</strong>
+                  </span>
                   <img src="{% static 'global/images/sacola.png' %}" alt="Sacola do cliemte">
                 </a>
               </li>
+              {% endif %}
             </div>
           </ul>
           <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
@@ -41,51 +77,52 @@
             <img src="{% static 'global/images/LogoMenu.png' %}" alt="Logo do site">
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
           </div>
-          <div></div>
           <div class="offcanvas-body">
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-              <li><a href="#">Outlet</a></li>
+              <li><a href="{% url 'produto:outlet' %}">Outlet</a></li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Feminio
                 </a>
                 <ul class="dropdown-menu">
-                  <li><h5 class="text-center">Lançamentos</h5></li>
+                  <li><a href="{% url 'produto:buscasubcategoria' 'F' 'R' %}"><p class="text-center">Roupas</p></a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><a class="dropdown-item" href="#">Moda Verão</a></li>
-                  <li><a class="dropdown-item" href="#">Desconto apartir de 30%</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'R' 'Camiseta'%}">Camisetas</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'R' 'Vestido'%}">Vestidos</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'R' 'Camisa'%}">Camisas</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'R' 'Cropped'%}">Croppeds</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'R' 'Short'%}">Shorts</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'R' 'Calca'%}">Calças</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'R' 'Blazer'%}">Blazers</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'R' 'Saia'%}">Saias</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'R' 'Moletom'%}">Moletons</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'R' 'Jaqueta'%}">Jaquetas</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'R' 'Outro'%}">Outras</a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><h5 class="text-center">Roupas</h5></li>
+                  <li><a href="{% url 'produto:buscasubcategoria' 'F' 'C' %}"><p class="text-center">Calçados</p></a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><a class="dropdown-item" href="#">Camisetas</a></li>
-                  <li><a class="dropdown-item" href="#">Calças</a></li>
-                  <li><a class="dropdown-item" href="#">Camisas</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'C' 'Tenis'%}">Tênis</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'C' 'Sandalia'%}">Sandálias</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'C' 'Rasteira'%}">Rasteiras</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'C' 'Outro'%}">Outros</a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><h5 class="text-center">Calçados</h5></li>
+                  <li><a href="{% url 'produto:buscasubcategoria' 'F' 'A' %}"><p class="text-center">Acessórios</p></a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><a class="dropdown-item" href="#">Sapatos</a></li>
-                  <li><a class="dropdown-item" href="#">Chinelos</a></li>
-                  <li><a class="dropdown-item" href="#">Tênis</a></li>
-                  <li>
-                    <hr class="dropdown-divider">
-                  </li>
-                  <li><h5 class="text-center">Acessórios</h5></li>
-                  <li>
-                    <hr class="dropdown-divider">
-                  </li>
-                  <li><a class="dropdown-item" href="#">Bolças</a></li>
-                  <li><a class="dropdown-item" href="#">Relógios</a></li>
-                  <li><a class="dropdown-item" href="#">Carteiras</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'A' 'Bolca'%}">Bolças</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'A' 'Oculo'%}">Óculos</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'A' 'Mochila'%}">Mochilas</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'A' 'Cinto'%}">Cintos</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'A' 'Outro'%}">Outros</a></li>
                 </ul>
               </li>
               <li class="nav-item dropdown">
@@ -93,42 +130,42 @@
                   Masculino
                 </a>
                 <ul class="dropdown-menu">
-                  <li><h5 class="text-center">Lançamentos</h5></li>
+                  <li><a href="{% url 'produto:buscasubcategoria' 'M' 'R' %}"><p class="text-center">Roupas</p></a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><a class="dropdown-item" href="#">Moda Verão</a></li>
-                  <li><a class="dropdown-item" href="#">Desconto apartir de 30%</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'R' 'Camiseta'%}">Camisetas</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'R' 'Polo'%}">Polos</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'R' 'Camisa'%}">Camisas</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'R' 'Short'%}">Shorts</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'R' 'Calca'%}">Calças</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'R' 'Blazer'%}">Blazers</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'R' 'Moletom'%}">Moletons</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'R' 'Jaqueta'%}">Jaquetas</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'R' 'Outro'%}">Outras</a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><h5 class="text-center">Roupas</h5></li>
+                  <li><a href="{% url 'produto:buscasubcategoria' 'M' 'C' %}"><p class="text-center">Calçados</p></a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><a class="dropdown-item" href="#">Camisetas</a></li>
-                  <li><a class="dropdown-item" href="#">Calças</a></li>
-                  <li><a class="dropdown-item" href="#">Camisas</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'C' 'Chinelo'%}">Chinelos</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'C' 'Tenis'%}">Tênis</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'C' 'Outro'%}">Outros</a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><h5 class="text-center">Calçados</h5></li>
+                  <li><a href="{% url 'produto:buscasubcategoria' 'M' 'A' %}"><p class="text-center">Acessórios</p></a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><a class="dropdown-item" href="#">Sapatos</a></li>
-                  <li><a class="dropdown-item" href="#">Chinelos</a></li>
-                  <li><a class="dropdown-item" href="#">Tênis</a></li>
-                  <li>
-                    <hr class="dropdown-divider">
-                  </li>
-                  <li><h5 class="text-center">Acessórios</h5></li>
-                  <li>
-                    <hr class="dropdown-divider">
-                  </li>
-                  <li><a class="dropdown-item" href="#">Bolças</a></li>
-                  <li><a class="dropdown-item" href="#">Relógios</a></li>
-                  <li><a class="dropdown-item" href="#">Carteiras</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'A' 'Oculos'%}">Óculos</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'A' 'Mochila'%}">Mochilas</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'A' 'Carteira'%}">Carteiras</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'A' 'Bone'%}">Bonés</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'A' 'Cinto'%}">Cintos</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'A' 'Outro'%}">Outros</a></li>
                 </ul>
               </li>
               <li class="nav-item dropdown">
@@ -136,42 +173,30 @@
                   Infantil
                 </a>
                 <ul class="dropdown-menu">
-                  <li><h5 class="text-center">Lançamentos</h5></li>
+                  <li><a href="{% url 'produto:buscasubcategoria' 'I' 'R' %}"><p class="text-center">Roupas</p></a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><a class="dropdown-item" href="#">Moda Verão</a></li>
-                  <li><a class="dropdown-item" href="#">Desconto apartir de 30%</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'I' 'R' 'Camiseta'%}">Camisetas</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'I' 'R' 'Polo'%}">Polos</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'I' 'R' 'Camisa'%}">Camisas</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'I' 'R' 'Short'%}">Shorts</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'I' 'R' 'Calca'%}">Calças</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'I' 'R' 'Moletom'%}">Moletons</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'I' 'R' 'Jaqueta'%}">Jaquetas</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'I' 'R' 'Outro'%}">Outras</a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><h5 class="text-center">Roupas</h5></li>
+                  <li><a href="{% url 'produto:buscasubcategoria' 'I' 'C' %}"><p class="text-center">Calçados</p></a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><a class="dropdown-item" href="#">Camisetas</a></li>
-                  <li><a class="dropdown-item" href="#">Calças</a></li>
-                  <li><a class="dropdown-item" href="#">Camisas</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'I' 'C' 'Chinelo'%}">Chinelos</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'I' 'C' 'Tenis'%}">Tênis</a></li>
+                  <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'I' 'C' 'Outro'%}">Outros</a></li>
                   <li>
-                    <hr class="dropdown-divider">
                   </li>
-                  <li><h5 class="text-center">Calçados</h5></li>
-                  <li>
-                    <hr class="dropdown-divider">
-                  </li>
-                  <li><a class="dropdown-item" href="#">Sapatos</a></li>
-                  <li><a class="dropdown-item" href="#">Chinelos</a></li>
-                  <li><a class="dropdown-item" href="#">Tênis</a></li>
-                  <li>
-                    <hr class="dropdown-divider">
-                  </li>
-                  <li><h5 class="text-center">Acessórios</h5></li>
-                  <li>
-                    <hr class="dropdown-divider">
-                  </li>
-                  <li><a class="dropdown-item" href="#">Bolças</a></li>
-                  <li><a class="dropdown-item" href="#">Relógios</a></li>
-                  <li><a class="dropdown-item" href="#">Carteiras</a></li>
                 </ul>
               </li>
             </ul>
@@ -184,110 +209,133 @@
     <nav class="d-flex navbar navbar-expand p-0">
       <ul>
         <li class="logo">
-          <a class="nav-link" href="#">
+          <a class="nav-link" href="{% url 'produto:marketing' %}">
             <img src="{% static 'global/images/LogoMenu.png' %}" alt="Logo do site">
           </a>
         </li>
         <li class="dropdown">
-          <a href="#">Feminino</a>
-          <ul class="menu-area">
-            <ul>
-              <h4>Novidades</h4>
-              <li><a href="#">Moda Verão</a></li>
-              <li><a href="#">A partir de 30% de disconto</a></li>
+          <a href="{% url 'produto:buscacategoria' 'F' %}">Feminino</a>
+          <ul class="menu-area">           
+            <ul class="mx-4">
+              <a href="{% url 'produto:buscasubcategoria' 'F' 'R' %}"><h4>Roupas</h4></a>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'R' 'Camiseta'%}">Camisetas</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'R' 'Vestido'%}">Vestidos</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'R' 'Camisa'%}">Camisas</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'R' 'Cropped'%}">Croppeds</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'R' 'Short'%}">Shorts</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'R' 'Calca'%}">Calças</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'R' 'Blazer'%}">Blazers</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'R' 'Saia'%}">Saias</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'R' 'Moletom'%}">Moletons</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'R' 'Jaqueta'%}">Jaquetas</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'R' 'Outro'%}">Outras</a></li>
             </ul>
-            <ul>
-              <h4>Roupas</h4>
-              <li><a href="#">Calças</a></li>
-              <li><a href="#">camisetas</a></li>
-              <li><a href="#">Jaquetas</a></li>
+            <ul class="mx-2">
+              <a href="{% url 'produto:buscasubcategoria' 'F' 'C' %}"><h4>Calçados</h4></a>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'C' 'Tenis'%}">Tênis</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'C' 'Sandalia'%}">Sandálias</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'C' 'Rasteira'%}">Rasteiras</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'C' 'Outro'%}">Outros</a></li>
             </ul>
-            <ul>
-              <h4>Calçados</h4>
-              <li><a href="#">Sapato</a></li>
-              <li><a href="#">Tênis</a></li>
-              <li><a href="#">Chinelos</a></li>
-            </ul>
-            <ul>
-              <h4>Acessórios</h4>
-              <li><a href="#">Relógios</a></li>
-              <li><a href="#">Carteiras</a></li>
-              <li><a href="#">Óculos</a></li>
+            <ul class="mx-4"> 
+              <a href="{% url 'produto:buscasubcategoria' 'F' 'A' %}"><h4>Acessórios</h4></a>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'A' 'Bolca'%}">Bolças</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'A' 'Oculo'%}">Óculos</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'A' 'Mochila'%}">Mochilas</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'A' 'Cinto'%}">Cintos</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'F' 'A' 'Outro'%}">Outros</a></li>
             </ul>
           </ul>
         </li>
         <li class="dropdown">
-          <a href="#">Masculino</a>
+          <a href="{% url 'produto:buscacategoria' 'M' %}">Masculino</a>
           <ul class="menu-area menu-space-1">
-            <ul>
-              <h4>Novidades</h4>
-              <li><a href="#">Moda Verão</a></li>
-              <li><a href="#">A partir de 30% de disconto</a></li>
+            <ul class="mx-4">
+              <a href="{% url 'produto:buscasubcategoria' 'M' 'R' %}"><h4>Roupas</h4></a>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'R' 'Camiseta'%}">Camisetas</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'R' 'Polo'%}">Polos</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'R' 'Camisa'%}">Camisas</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'R' 'Short'%}">Shorts</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'R' 'Calca'%}">Calças</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'R' 'Blazer'%}">Blazers</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'R' 'Moletom'%}">Moletons</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'R' 'Jaqueta'%}">Jaquetas</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'R' 'Outro'%}">Outras</a></li>
             </ul>
-            <ul>
-              <h4>Roupas</h4>
-              <li><a href="#">Calças</a></li>
-              <li><a href="#">camisetas</a></li>
-              <li><a href="#">Jaquetas</a></li>
+            <ul class="mx-2">
+              <a href="{% url 'produto:buscasubcategoria' 'M' 'C' %}"><h4>Calçados</h4></a>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'C' 'Chinelo'%}">Chinelos</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'C' 'Tenis'%}">Tênis</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'C' 'Outro'%}">Outros</a></li>
             </ul>
-            <ul>
-              <h4>Calçados</h4>
-              <li><a href="#">Sapato</a></li>
-              <li><a href="#">Tênis</a></li>
-              <li><a href="#">Chinelos</a></li>
-            </ul>
-            <ul>
-              <h4>Acessórios</h4>
-              <li><a href="#">Relógios</a></li>
-              <li><a href="#">Carteiras</a></li>
-              <li><a href="#">Óculos</a></li>
+            <ul class="mx-4">
+              <a href="{% url 'produto:buscasubcategoria' 'M' 'A' %}"><h4>Acessórios</h4></a>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'A' 'Oculos'%}">Óculos</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'A' 'Mochila'%}">Mochilas</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'A' 'Carteira'%}">Carteiras</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'A' 'Bone'%}">Bonés</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'A' 'Cinto'%}">Cintos</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'M' 'A' 'Outro'%}">Outros</a></li>
             </ul>
           </ul>
         </li>
         <li class="dropdown">
-          <a href="#">Infantil</a>
+          <a href="{% url 'produto:buscacategoria' 'I' %}">Infantil</a>
           <ul class="menu-area menu-space-2">
-            <ul>
-              <h4>Novidades</h4>
-              <li><a href="#">Moda Verão</a></li>
-              <li><a href="#">A partir de 30% de disconto</a></li>
+            <ul class="mx-4">
+              <a href="{% url 'produto:buscasubcategoria' 'I' 'R' %}"><h4>Roupas</h4></a>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'I' 'R' 'Camiseta'%}">Camisetas</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'I' 'R' 'Polo'%}">Polos</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'I' 'R' 'Camisa'%}">Camisas</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'I' 'R' 'Short'%}">Shorts</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'I' 'R' 'Calca'%}">Calças</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'I' 'R' 'Moletom'%}">Moletons</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'I' 'R' 'Jaqueta'%}">Jaquetas</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'I' 'R' 'Outro'%}">Outras</a></li>
             </ul>
-            <ul>
-              <h4>Roupas</h4>
-              <li><a href="#">Calças</a></li>
-              <li><a href="#">camisetas</a></li>
-              <li><a href="#">Jaquetas</a></li>
-            </ul>
-            <ul>
-              <h4>Calçados</h4>
-              <li><a href="#">Sapato</a></li>
-              <li><a href="#">Tênis</a></li>
-              <li><a href="#">Chinelos</a></li>
-            </ul>
-            <ul>
-              <h4>Acessórios</h4>
-              <li><a href="#">Relógios</a></li>
-              <li><a href="#">Carteiras</a></li>
-              <li><a href="#">Óculos</a></li>
+            <ul class="mx-2">
+              <a href="{% url 'produto:buscasubcategoria' 'I' 'C' %}"><h4>Calçados</h4></a>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'I' 'C' 'Chinelo'%}">Chinelos</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'I' 'C' 'Tenis'%}">Tênis</a></li>
+              <li><a class="dropdown-item" href="{% url 'produto:buscatipo' 'I' 'C' 'Outro'%}">Outros</a></li>
             </ul>
           </ul>
         </li>
         <li>
-          <a href="#">Outlet</a>
+          <a href="{% url 'produto:outlet' %}">Outlet</a>
         </li>
       </ul>
       <ul  class="d-flex justify-content-end">       
         <div class="d-flex">
-          <li>
-            <a href="#">
-              <img src="{% static 'global/images/menuUser.png' %}" alt="Menu do cliente">
-            </a>
-          </li>
+          {% if request.session.sacola %}
           <li class="mx-3">
-            <a href="#">
+            <a class="active" href="{% url 'produto:sacola' %}">
+              <span class="nav-cart-count mr-1">
+                <strong>{{ request.session.sacola|cart_total_qtd }}x</strong>
+              </span>
               <img src="{% static 'global/images/sacola.png' %}" alt="Sacola do cliemte">
             </a>
           </li>
+          {% endif %}
+          {% if request.user.is_authenticated %}
+          <li class="nav-item dropdown space-right">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="{% static 'global/images/menuUser.png' %}" alt="Menu do cliente">
+            </a>
+            <ul class="dropdown-menu menu-space-3">
+              <li><a class="dropdown-item" href="{% url 'pedido:lista' %}">Meus pedidos</a></li>
+              <li><a class="dropdown-item" href="{% url 'perfil:criar' %}">Atualizar meus dados</a></li>
+              <li><a class="dropdown-item" href="{% url 'perfil:logout' %}">Sair</a></li>
+            </ul>
+          </li>
+          {% else %}
+          <li class="nav-item">
+              <a class="nav-link" href="{% url 'perfil:criar' %}">Entrar</a>
+          </li>
+          <li class="nav-item mx-3">
+              <a class="nav-link" href="{% url 'perfil:criar' %}">Criar conta</a>
+          </li>
+          {% endif %}
         </div>
       </ul>
     </nav>
@@ -295,5 +343,5 @@
 </div>
 
 {% block style %}
-  <link rel="stylesheet" href="{% static 'global/header/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'header/css/style.css' %}">
 {% endblock style %}

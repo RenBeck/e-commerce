@@ -1,62 +1,53 @@
 {% extends 'global/base.html' %}
+{% load bsfilters %}
 {% load static %}
-{% load omfilters %}
 {% block title %}BS | Home{% endblock title%}
 
-{% block lista %}
-    <div class="row contener">
-      <div class="col-lg-12">
-          <div class="card-columns">
+{% block conteudo %}
+    <div class="grid-container">
 
-              {% for produto in produtos %}
+      {% for produto in produtos %}
 
-              <div class="card">
+      <div class="card-stilo mb-3">
 
-                <div class="row">
+        <div class="row">
+          {% if produto.imagem %}
+          <a href="{% url 'produto:detalhe' produto.slug %}">
+            <img class="card-img-top mb-2" src="{{ produto.imagem.url}}" alt="{{produto.nome}}">
+          </a>
+          {% endif %}
 
-                  <a href="{% url 'produto:detalhe' produto.slug %}">
-                    <img class="card-img-top" src="{{ produto.imagem.url}}" alt="{{produto.nome}}">
-                  </a>
+          <div class="card-body">
+              <h5 class="card-title px-3">{{ produto.nome }}</h5>  
+              <div class="container product-price-block align-items-end text-center">
+                
+                  {% if produto.preco_promocional %}
+                    <span class="product-price">
+                        {{ produto.preco_promocional|formata_preco }}
+                    </span>
+                    <span class="product-old-price text-muted">
+                        {{ produto.preco|formata_preco }}
+                    </span>
+                  {% else %}
+                    <span class="product-price">
+                        {{ produto.preco|formata_preco }}
+                    </span>
+                  {% endif %}
 
-                  <div class="card-body">
-                      <h5 class="card-title">{{ produto.nome }}</h5>
-                      <p class="card-text">{{ produto.descricao }}</p>
-                      <div class="container product-price-block text-center">
-
-                          {% if produto.preco_minimo %}
-                            <span class="product-price">
-                                {{ produto.preco_minimo|formata_preco }}
-                            </span>
-                            <span class="product-old-price text-muted">
-                                {{ produto.preco|formata_preco }}
-                            </span>
-                          {% else %}
-                            <span class="product-price">
-                                {{ produto.preco|formata_preco }}
-                            </span>
-                          {% endif %}
-
-                      </div>
-                  </div>
-                  <div class="card-footer bg-transparent border-top-light-custom text-center">
-                      <a href="{% url 'produto:detalhe' produto.slug %}" class="btn btn-primary btn-sm m-1 btn-block">
+                  <div class="card-footer bg-transparent text-center">
+                      <a href="{% url 'produto:detalhe' produto.slug %}" class="btn btn-sm m-3 px-3 btn-block">
                           <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                          Comprar
+                          Adicionar à Sacola
                       </a>
                   </div>
-
-                </div>
-
               </div>
-
-              {% endfor %}
-
-
-
-
-
           </div>
+
+        </div>
+
       </div>
+
+      {% endfor %}
     </div>
 
     <div class="row mt-3">
@@ -67,5 +58,5 @@
 {% endblock %}
 
 {% block style %}
-  <link rel="stylesheet" href="{% static 'global/produto/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'produto/css/style.css' %}">
 {% endblock style %}

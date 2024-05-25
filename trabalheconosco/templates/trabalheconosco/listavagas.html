@@ -1,0 +1,36 @@
+{% extends 'global/base.html' %}
+{% load static %}
+{% block title %} Nossas vagas | BS{% endblock %}
+
+{% block conteudo %}
+<div class="row contener">
+    <h1 class="m-4">Nossas Vagas</h1>
+    <div class="grid-container">
+        {% for vaga in vagas %}
+          <div class="card-stilo mb-4 mx-4">
+              <div class="row">
+                    <div>
+                        <h2 class="my-4">{{ vaga.nome }}</h2>  
+                        <h3 class="mb-3">Sobre a Vaga</h3>
+                        <p>{{ vaga.sobre_vaga }}</p>
+                        <h3 class="mb-3">Responsabilidades</h3>
+                        <p>{{vaga.responsabilidades}}</p>
+                        <h3 class="mb-3">Requisitos</h3>
+                        <p>{{vaga.requisitos}}</p>
+                        <h3 class="mb-3">Benefícios</h3>
+                        <p>{{vaga.beneficios}}</p>
+                        <div class="bg-transparent text-center">
+                          <a href="{% url 'trabalheconosco:curriculo' %}" class="btn btn-sm m-3 px-3 btn-block">
+                              Enviar Currículo
+                          </a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        {% endfor %}
+    </div>  
+{% endblock %}
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'trabalhe/css/style.css' %}">
+{% endblock style %}

@@ -1,0 +1,31 @@
+.form-card-1 {
+    max-height: 340px;
+    border-radius: 16px;
+    border: 1px solid #020618;
+    background:  #FAFAFA; 
+    box-shadow: 2px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}  
+
+@media (max-width: 767px) {
+    .form-card-1 {
+        max-height: 340px;
+    }
+}
+
+@media (min-width: 1300px) {
+    .form-card-1 {
+        max-height: 350px;
+    }
+}
+
+.form-card-2 {
+    border-radius: 16px;
+    border: 1px solid #020618;
+    background:  #FAFAFA; 
+    box-shadow: 2px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}   
+
+.btn {
+    background-color: #020618;
+    width: 180px;
+}

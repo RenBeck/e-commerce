@@ -1,0 +1,102 @@
+.bgfiltro{
+    background: linear-gradient(180deg, #000 26%, #FFF500 62.91%, #000 100%);
+    height: 100%;
+}
+
+.product-price-block {
+    font-size: 1.5rem;
+}
+
+.product-price {
+    font-size: 1.5rem;
+}
+
+.product-old-price {
+    text-decoration: line-through red;
+    font-size: 1rem;
+}
+
+.border-top-light-custom{
+    border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+ul.errorlist  {
+    list-style-type: none;
+    margin: 5px 0;
+    padding: 0;
+    font-size: 13px;
+    color: red;
+    display: block;
+}
+
+ul.errorlist li {
+    display: block;
+    font-weight: bold;
+}
+
+h5 {
+    height: 100px;
+    font-size: 14px;
+}
+
+.card-stilo {
+    height: 100%; 
+    background: #FAFAFA;
+    box-shadow: 2px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+}
+
+.card-footer {
+    border-top: none
+}
+
+.btn {
+    background: #020618;
+    color: white;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+
+@media (min-width: 768px) {
+    .grid-container {
+        padding-top: 130px;
+    }
+}
+
+@media (min-width: 1441px) {
+    .grid-container {
+        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    }
+}
+
+
+.form-group textarea {
+    width: 100%;
+}
+.nav-cart, .nav-cart a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.table {
+    vertical-align: middle;
+}
+
+.cart-img {
+    width: 100%
+ }
+
+ .page-link{
+    color: #212529;
+ }
+
+ .active>.page-link {
+    background-color: #020618;
+    border-color: #020618;
+}

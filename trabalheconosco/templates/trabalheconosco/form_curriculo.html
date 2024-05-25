@@ -1,0 +1,34 @@
+{% extends 'global/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Enviar Currículo | BS{% endblock %}
+
+{% block conteudo %}
+
+<div class="row justify-content-center contener mx-4 mb-4">
+    <div class="form-card py-4">
+        {% block titulocadastro %}
+        <h4 class="pb-3">Cadastro seu Currículo</h4>
+        {% endblock %}
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ CurriculoForm|crispy }}
+
+            <div class="row text-center pt-3">
+                <div class="col">
+                    <button type="submit" class='btn btn-primary btn-block'>
+                        Enviar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'trabalhe/css/style.css' %}">
+{% endblock style %}

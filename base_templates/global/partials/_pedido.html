@@ -1,0 +1,62 @@
+{% load static %}
+{% load bsfilters %}
+
+<div class="row contener">
+    <div class="col mx-4">
+        <h3>{{ pedido }}</h3>
+
+        <div class="row mt-4">
+            <div class="col-md-6 font-weight-bold mb-2">Número do pedido: {{ pedido.id }}</div>
+            <div class="col-md-6 font-weight-bold mb-2">Total a pagar: {{ pedido.total|formata_preco }}</div>
+            <div class="col-md-6 font-weight-bold mb-2">QTD. Itens: {{ pedido.qtd_total }}</div>
+            <div class="col-md-6 font-weight-bold mb-2">Status: {{ pedido.get_status_display }}</div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col">
+                <h4>Produtos</h4>
+            </div>
+        </div>
+
+        <div class="table-responsive mt-3">
+            <table class="table">
+                <tr>
+                    <th class="d-none d-lg-block">Imagem</th>
+                    <th>Produto</th>
+                    <th>V.</th>
+                    <th>QTD.</th>
+                    <th>Total</th>
+                </tr>
+
+                {% for linha in pedido.itempedido_set.all %}
+                <tr>
+                    <td class="d-none d-lg-block">
+                        <img class="cart-img" src="{% get_media_prefix %}{{ linha.imagem }}">
+                    </td>
+                    <td>{{ linha.produto }}</td>
+                    <td>{{ linha.variacao }}</td>
+                    <td>{{ linha.quantidade }}</td>
+                    <td>
+                        {% if linha.preco_promocional %}
+                        {{ linha.preco_promocional|formata_preco }}
+                        {% else %}
+                        {{ linha.preco|formata_preco }}
+                        {% endif %}
+                    </td>
+                </tr>
+                
+                {% endfor %}
+
+            </table>
+        </div>
+            {% if pedido.get_status_display == 'Criado' or pedido.get_status_display == 'Pagamento Reprovado'%}
+                <div class="d-flex justify-content-center my-4 my-lg-5">
+                    <a href="/pagar/" class="btn btn-primary btn-block mx-3">Pagar</a>
+                </div> 
+            {% endif%}
+    </div>
+</div>
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'pedido/css/style.css' %}">
+{% endblock style %}
