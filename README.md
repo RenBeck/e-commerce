@@ -1,6 +1,6 @@
 # E-commerce de Moda Online
 
-Bem-vindo ao projeto de E-commerce de Moda Online, uma plataforma onde os clientes podem comprar produtos de moda, incluindo roupas, acessórios e calçados. Este README fornecerá uma visão geral do projeto, como configurá-lo e usá-lo.
+Bem-vindo ao projeto de E-commerce, uma plataforma onde os clientes podem comprar produtos, incluindo roupas, acessórios e calçados. Este README fornecerá uma visão geral do projeto, como configurá-lo e usá-lo.
 
 ## Índice
 
