@@ -1,4 +1,4 @@
-name: Django CI
+name: Django CI/CD
 
 on:
   push:
@@ -8,7 +8,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
@@ -28,3 +27,29 @@ jobs:
     - name: Run Tests
       run: |
         python manage.py test
+
+#  web-deploy:
+#   name: Deploy
+#    needs: build
+#
+#    steps:
+#    - name: Checkout code
+#      uses: actions/checkout@v3
+#    
+#    - name: Setup SSH
+#      run: |
+#        mkdir -p ~/.ssh
+#        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+#       chmod 600 ~/.ssh/id_rsa
+#       ssh-keyscan -H 35.239.14.1 >> ~/.ssh/known_hosts
+#
+#    - name: List files in the current directory
+#      run: ls -l
+#
+#    - name: Transfer deploy.sh to server
+#      run: |
+#       scp -o StrictHostKeyChecking=no deploy.sh renorb03@35.239.14.1:/home/renorb03/deploy.sh
+#
+#    - name: Deploy to server
+#      run: |
+#        ssh -o StrictHostKeyChecking=no renorb03@35.239.14.1 'bash /home/renorb03/deploy.sh'
