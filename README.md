@@ -60,6 +60,131 @@ Crie um superusuário para acessar o Django Admin:
 python manage.py createsuperuser
 ```
 
+## Configuração para o acesso UTP ao
+
+### Instale as libs:
+
+```bash
+pip install qrcode[pil]
+pip install pyot
+```
+
+### Entre no Shell do Django 
+
+```bash
+python manage.py shell
+```
+
+#### Digite o seguinte código:
+
+```bash
+>>> from django.contrib.auth.models import User
+>>> from django_otp.plugins.otp_totp.models import TOTPDevice
+>>> import qrcode 
+>>> user = User.objects.get(username='Nome_Usuário')           
+>>> device = TOTPDevice.objects.create(user=user, name='OTP Device')                                          
+>>> url = device.config_url                                                               
+>>> qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=10, border=4)   
+>>> qr.add_data(url)
+>>> qr.make(fit=True)
+>>> qr_img = qr.make_image(fill_color="black", back_color="white")
+>>> qr_img.show()
+```
+
+No final das digitação do codigo será exibido um QR-CODE para adicionar o dispositivo OTP, você pode verificar o OTP usando um aplicativo de autenticação compatível, como o Google Authenticator. Obtenha o código OTP gerado pelo aplicativo e insira-o quando solicitado. 
+
+## Configuração do Action
+
+### Gere a chave SSH no seu servidor sem senha
+
+```bash
+ssh-keygen -t rsa -b 4096 -C "seu-email@exemplo.com"
+```
+
+### Adicione a chave pública ao ~/.ssh/authorized_keys no seu servidor.
+
+### Adicione a chave privada aos segredos do GitHub:
+
+- Vá para a página do repositório no GitHub.
+- Clique em "Settings" > "Secrets and variables" > "Actions".
+- Clique em "New repository secret".
+- Adicione a chave privada como valor e nomeie como "SSH_PRIVATE_KEY".
+
+### Os arquivos de Confuguração:
+
+#### django.yml
+
+```bash
+name: Django CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.12]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Run Tests
+      run: |
+        python manage.py test
+
+  web-deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Setup SSH
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H 35.239.14.1 >> ~/.ssh/known_hosts
+
+    - name: List files in the current directory
+      run: ls -l
+
+    - name: Transfer deploy.sh to server
+      run: |
+        scp -o StrictHostKeyChecking=no deploy.sh renorb03@35.239.14.1:/home/renorb03/deploy.sh
+
+    - name: Deploy to server
+      run: |
+        ssh -o StrictHostKeyChecking=no renorb03@35.239.14.1 'bash /home/renorb03/deploy.sh'
+
+```
+#### deploy.sh
+
+```bash
+cd /home/renorb03/bs-ecommerce
+git pull origin main
+. venv/bin/activate
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py collectstatic --noinput
+sudo systemctl restart bsloja
+```
+
 ## Execução
 
 ### Execute o Servidor de Desenvolvimento

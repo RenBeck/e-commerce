@@ -6,7 +6,7 @@ __pycache__
 db.sqlite3
 media/
 static/
-portfolio/local_settings.py
+loja/local_settings.py
 
 # Backup files # 
 *.bak 

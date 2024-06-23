@@ -170,3 +170,8 @@ SESSION_SAVE_EVERY_REQUEST = False
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+try:
+    from loja.local_settings import *
+except ImportError:
+    ...

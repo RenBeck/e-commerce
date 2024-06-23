@@ -24,7 +24,8 @@ class Pedido_test_models(TestCase):
             preco=100.98,
             preco_promocional=90.98,
             quantidade=3,
-            imagem='camiseta azul'
+            imagem='camiseta azul',
+            devolvido=False
         )
 
 
